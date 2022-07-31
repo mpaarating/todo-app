@@ -1,11 +1,22 @@
 import React, { useState } from "react";
+import { useTodo } from "../contexts/todo-context";
 
-const TodoForm = ({ handleAddTodo }) => {
+const TodoForm = () => {
   const formStyle = {
     width: "50%",
-  }
+  };
 
   const [text, setText] = useState("");
+  const [todos, setTodos] = useTodo();
+
+  const handleAddTodo = (text) => {
+    const newTodo = {
+      id: Date.now(),
+      text,
+      completed: false,
+    };
+    setTodos([...todos, newTodo]);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,7 +26,11 @@ const TodoForm = ({ handleAddTodo }) => {
   };
 
   return (
-    <form className="container mt-2 mb-1" style={formStyle} onSubmit={handleSubmit}>
+    <form
+      className="container mt-2 mb-1"
+      style={formStyle}
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         className="input"

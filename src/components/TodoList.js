@@ -1,22 +1,14 @@
 import React from "react";
 import Todo from "./Todo";
+import { useTodo } from "../contexts/todo-context";
 
-function TodoList({
-  todoList,
-  handleToggleCompleted,
-  handleDeleteTodo,
-}) {
+function TodoList() {
+  const [todos] = useTodo();
+
   return (
     <div>
-      {todoList.map((todo) => {
-        return (
-          <Todo
-            key={todo.id}
-            todo={todo}
-            handleToggleCompleted={handleToggleCompleted}
-            handleDeleteTodo={handleDeleteTodo}
-          />
-        );
+      {todos.map((todo) => {
+        return <Todo key={todo.id} todo={todo} />;
       })}
     </div>
   );
