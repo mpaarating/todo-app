@@ -3,7 +3,7 @@ import Todo from "./Todo";
 
 function TodoList({ todoList, dispatch }) {
   return (
-    <div>
+    <div className="container">
       {todoList.map((todo) => {
         return <Todo key={todo.id} todo={todo} dispatch={dispatch} />;
       })}
@@ -11,4 +11,4 @@ function TodoList({ todoList, dispatch }) {
   );
 }
 
-export default TodoList;
+export default React.memo(TodoList);

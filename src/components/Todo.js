@@ -1,16 +1,22 @@
 import React from "react";
+import { actionTypes } from "../reducers/todo-actions";
+import EditTodo from "./EditTodo";
 
 const Todo = ({ todo, dispatch }) => {
   const handleToggleCompleted = () => {
-    dispatch({ type: "TOGGLE_COMPLETED", id: todo.id });
+    dispatch({ type: actionTypes.toggleCompleted, id: todo.id });
   };
 
   const handleDeleteTodo = () => {
-    dispatch({ type: "DELETE_TODO", id: todo.id });
+    dispatch({ type: actionTypes.deleteTodo, id: todo.id });
+  };
+
+  const handleToggleEdit = () => {
+    dispatch({ type: actionTypes.toggleEditing, id: todo.id });
   };
 
   return (
-    <div>
+    <>
       <li>
         <span
           className={
@@ -23,18 +29,25 @@ const Todo = ({ todo, dispatch }) => {
           ></i>
         </span>
         &nbsp;
-        {todo.text}
-        {todo.completed ? (
-          <span className="icon has-text-danger">
-            <i
-              className={"fas fa-square-xmark"}
-              onClick={() => handleDeleteTodo(todo.id)}
-            ></i>
+        {!todo.isEditing ? (
+          <span
+            style={todo.completed ? { textDecoration: "line-through" } : null}
+            onClick={handleToggleEdit}
+          >
+            {todo.text}
           </span>
-        ) : null}
+        ) : (
+          <EditTodo todo={todo} dispatch={dispatch} />
+        )}
+        <span className="icon has-text-danger">
+          <i
+            className={"fas fa-square-xmark"}
+            onClick={() => handleDeleteTodo(todo.id)}
+          ></i>
+        </span>
       </li>
-    </div>
+    </>
   );
 };
 
-export default Todo;
+export default React.memo(Todo);

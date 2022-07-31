@@ -18,16 +18,18 @@ function App() {
   return (
     <div className="App container">
       <Header />
-      <TodoList
-        todoList={todos}
-        dispatch={dispatch}
-      />
-      <TodoForm dispatch={dispatch} />
-      {todos.length > 0 ? (
-        <button className="mt-1 button is-danger" onClick={handleClearCompleted}>
-          Clear Completed
-        </button>
-      ) : null}
+      <React.StrictMode>
+        <TodoForm dispatch={dispatch} />
+        {todos.length > 0 ? (
+          <button
+            className="mt-1 mb-1 button is-danger"
+            onClick={handleClearCompleted}
+          >
+            Clear Completed
+          </button>
+        ) : null}
+        <TodoList todoList={todos} dispatch={dispatch} />
+      </React.StrictMode>
     </div>
   );
 }

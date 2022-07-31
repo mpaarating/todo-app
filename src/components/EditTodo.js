@@ -1,27 +1,19 @@
 import React, { useState } from "react";
 import { actionTypes } from "../reducers/todo-actions";
 
-const TodoForm = ({ dispatch }) => {
-  const formStyle = {
-    width: "50%",
-  };
-
-  const [text, setText] = useState("");
-
+const EditTodo = ({ todo, dispatch }) => {
+  const [text, setText] = useState(todo.text);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!text) return;
-    dispatch({ type: actionTypes.addTodo, text });
+    dispatch({ type: actionTypes.updateTodo, id: todo.id, text });
     setText("");
   };
 
   return (
-    <form
-      className="container mt-2 mb-1"
-      style={formStyle}
-      onSubmit={handleSubmit}
-    >
+    <form style={{ display: "inline", width: 200 }} onSubmit={handleSubmit}>
       <input
+        style={{ display: "inline", width: 200 }}
         type="text"
         className="input"
         placeholder="Add a todo..."
@@ -32,4 +24,4 @@ const TodoForm = ({ dispatch }) => {
   );
 };
 
-export default TodoForm;
+export default EditTodo;
