@@ -4,13 +4,13 @@ function todoReducer(state, action) {
   switch (action.type) {
     case actionTypes.addTodo:
       return [
-        ...state,
         {
           id: Date.now(),
           text: action.text,
           isEditing: false,
           completed: false,
         },
+        ...state
       ];
     case actionTypes.updateTodo:
       return state.map((todo) => {
