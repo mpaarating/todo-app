@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 
-const TodoForm = ({ handleAddTodo }) => {
+const TodoForm = ({ dispatch }) => {
   const formStyle = {
     width: "50%",
-  }
+  };
 
   const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!text) return;
-    handleAddTodo(text);
+    dispatch({ type: "ADD_TODO", text });
     setText("");
   };
 
   return (
-    <form className="container mt-2 mb-1" style={formStyle} onSubmit={handleSubmit}>
+    <form
+      className="container mt-2 mb-1"
+      style={formStyle}
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         className="input"

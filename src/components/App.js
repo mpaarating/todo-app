@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
+
+import todoReducer from "../reducers/todo-reducer";
 
 import Header from "./Header";
 import TodoList from "./TodoList";
@@ -7,34 +9,10 @@ import TodoForm from "./TodoForm";
 import "../styles/App.css";
 
 function App() {
-  const [todos, setTodos] = useState([]);
-
-  const handleToggleCompleted = (id) => {
-    const updatedTodos = todos.map((todo) => {
-      return todo.id === id
-        ? { ...todo, completed: !todo.completed }
-        : { ...todo };
-    });
-    setTodos(updatedTodos);
-  };
-
-  const handleDeleteTodo = (id) => {
-    const updatedTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(updatedTodos);
-  };
+  const [todos, dispatch] = useReducer(todoReducer, []);
 
   const handleClearCompleted = () => {
-    const updatedTodos = todos.filter((todo) => !todo.completed);
-    setTodos(updatedTodos);
-  };
-
-  const handleAddTodo = (text) => {
-    const newTodo = {
-      id: Date.now(),
-      text,
-      completed: false,
-    };
-    setTodos([...todos, newTodo]);
+    dispatch({ type: "CLEAR_COMPLETED" });
   };
 
   return (
@@ -42,11 +20,9 @@ function App() {
       <Header />
       <TodoList
         todoList={todos}
-        handleDeleteTodo={handleDeleteTodo}
-        handleToggleCompleted={handleToggleCompleted}
-        handleClearCompleted={handleClearCompleted}
+        dispatch={dispatch}
       />
-      <TodoForm handleAddTodo={handleAddTodo} />
+      <TodoForm dispatch={dispatch} />
       {todos.length > 0 ? (
         <button className="mt-1 button is-danger" onClick={handleClearCompleted}>
           Clear Completed
